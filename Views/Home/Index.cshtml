@@ -1,0 +1,54 @@
+﻿@model List<PrinterMonitor.Models.Printer>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .container-fluid{
+        padding: 20px;
+        background-color: #0f172a;
+    }
+</style>
+<div class="container-fluid">
+    <div class="grid-printers">
+        @foreach (var printer in Model)
+        {
+            <div class="printer-card">
+                <div class="printer-card-title">
+                    <h2>@printer.Setor</h2>
+                </div>
+                <div>
+                    @if (!printer.Online)
+                    {
+                        <div style="text-align: center;"><strong style="color: red;">Impressora Offline</strong></div>
+                    }
+                    else
+                    {
+                        <strong>Nome: @printer.Nome</strong><br />
+                        <small class="small">Modelo: @printer.Modelo</small><br />
+                        <small class="small">IP: @printer.Ip</small>
+
+                        <hr style="border: 0; border-top: 1px solid #666; margin: 15px 0;" />
+
+                        @foreach (var toner in printer.Toners)
+                        {
+                            if (toner.Porcentagem < 0)
+                            {
+                                <div style="text-align: center;"><strong style="color: red;">@toner.Descricao - Desconhecido</strong></div>
+                            }
+                            else
+                            {
+                                <div class="toner-descricao">
+                                    <span>@toner.Descricao</span><span>@Math.Round(toner.Porcentagem) %</span>
+                                </div>
+                                <div class="barra-fundo">
+                                    <div class="barra-preenchimento @toner.Descricao" style="width: calc(@toner.Porcentagem * 1%);"></div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

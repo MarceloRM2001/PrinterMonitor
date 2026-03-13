@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "FbLuGC02PII=",
+  "success": true,
+  "projectFilePath": "C:\\Projetos\\PrinterMonitor\\PrinterMonitor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\marcelo.miglioretto\\.nuget\\packages\\lextm.sharpsnmplib\\12.5.7\\lextm.sharpsnmplib.12.5.7.nupkg.sha512"
+  ],
+  "logs": []
+}
