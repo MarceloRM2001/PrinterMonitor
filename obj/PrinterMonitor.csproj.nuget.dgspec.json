@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos\\PrinterMonitor\\PrinterMonitor.csproj": {}
+    "C:\\Projects\\PrinterMonitor\\PrinterMonitor.csproj": {}
   },
   "projects": {
-    "C:\\Projetos\\PrinterMonitor\\PrinterMonitor.csproj": {
+    "C:\\Projects\\PrinterMonitor\\PrinterMonitor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos\\PrinterMonitor\\PrinterMonitor.csproj",
+        "projectUniqueName": "C:\\Projects\\PrinterMonitor\\PrinterMonitor.csproj",
         "projectName": "PrinterMonitor",
-        "projectPath": "C:\\Projetos\\PrinterMonitor\\PrinterMonitor.csproj",
-        "packagesPath": "C:\\Users\\marcelo.miglioretto\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos\\PrinterMonitor\\obj\\",
+        "projectPath": "C:\\Projects\\PrinterMonitor\\PrinterMonitor.csproj",
+        "packagesPath": "C:\\Users\\marce\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\PrinterMonitor\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\marcelo.miglioretto\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\marce\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -68,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

@@ -7,6 +7,8 @@ namespace PrinterMonitor.Models
 {
     public class Printer
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         public string Setor { get; set; } = "";
         public string Nome { get; set; } = "";
         public string Ip { get; set; } = "";

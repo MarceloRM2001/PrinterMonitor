@@ -11,6 +11,68 @@ namespace PrinterMonitor.Services
 {
     public class PrinterSnmpService
     {
+        public static bool Test(string ip)
+        {
+            try
+            {
+                var result = Messenger.Get(
+                    VersionCode.V1,
+                    new IPEndPoint(IPAddress.Parse(ip),161),
+                    new OctetString("public"),
+                    new List<Variable>
+                    {
+                        new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0"))
+                    },
+                    3000
+                );
+
+                return result.Count > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static async Task<List<string>> Discover(string network)
+        {
+            var printers = new List<string>();
+
+            int maxParallel = 50;
+            var semaphore = new SemaphoreSlim(maxParallel);
+
+            var tasks = Enumerable.Range(1,254).Select(async i =>
+            {
+                var ip = $"{network}.{i}";
+
+                await semaphore.WaitAsync();
+
+                try
+                {
+                    bool ok = await Task.Run(() => Test(ip));
+
+                    if(ok)
+                    {
+                        Console.WriteLine($"SNMP OK: {ip}");
+                        lock(printers)
+                        {
+                            printers.Add(ip);
+                        }
+                    }
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+            });
+
+            await Task.WhenAll(tasks);
+
+            Console.WriteLine($"Descoberta finalizada. Impressoras encontradas: {printers.Count}");
+
+            return printers;
+        }
+
         public string ObterNomeImpressora(string ip)
         {
             try

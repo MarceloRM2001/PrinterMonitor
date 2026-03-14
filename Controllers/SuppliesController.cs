@@ -18,6 +18,6 @@ public class SuppliesController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View("Error!");
+        return View("Error");
     }
 }

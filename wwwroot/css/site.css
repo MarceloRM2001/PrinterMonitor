@@ -106,13 +106,13 @@ h2{
     font-weight: bold;
 }
 strong{
-    color: black;
+    color: f1f5f9;
 }
 small{
-    color: black;
+    color: f1f5f9;
 }
 span{
-    color: black;
+    color: f1f5f9;
 }
 .printer-card:hover{
     transform: scale(1.03);

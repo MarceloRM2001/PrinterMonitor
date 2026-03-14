@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace PrinterMonitor.Controllers;
 
-[Route("[controller]")]
 public class AlertsController : Controller
 {
     public IActionResult Index()
@@ -19,6 +18,6 @@ public class AlertsController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View("Error!");
+        return View("Error");
     }
 }

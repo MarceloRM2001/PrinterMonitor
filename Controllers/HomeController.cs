@@ -44,7 +44,7 @@ public class HomeController : Controller
         {
             try
             {
-                var timeoutTask = Task.Delay(2000);
+                var timeoutTask = Task.Delay(6000);
 
                 var snmpTask = Task.Run(() =>
                 {

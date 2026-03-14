@@ -1,10 +1,72 @@
-@page
+@model List<PrinterMonitor.Models.Printer>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Printers";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Impressoras</h1>
 
-<div>
-    
-</div>
+<a asp-action="Create" class="btn btn-primary mb-3">
+    Nova Impressora
+</a>
+
+<a asp-action="Discover" class="btn btn-primary mb-3">
+    Descobrir Impressoras na Rede
+</a>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Setor</th>
+            <th>Nome</th>
+            <th>IP</th>
+            <th>Modelo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var printer in Model)
+        {
+            <tr>
+                <td>@printer.Setor</td>
+                <td>@printer.Nome</td>
+                <td>@printer.Ip</td>
+                <td>@printer.Modelo</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@printer.Id" class="btn btn-sm btn-warning">
+                        Editar
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@printer.Id" class="btn btn-sm btn-danger">
+                        Excluir
+                    </a>
+                    <button class="btn btn-sm btn-info" onclick="TestSnmp('@printer.Ip', this)">
+                        Testar SNMP
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    async function TestSnmp(ip, button)
+    {
+        button.innerText = "Testando..."
+
+        const response = await fetch(`/Printers/TestSnmp?ip=${ip}`)
+
+        const data = await response.json()
+
+        if(data.online)
+        {
+            button.innerText = "Online"
+            button.classList.remove("btn-info")
+            button.classList.add("btn-success")
+        }
+        else
+        {
+            button.innerText = "Offline"
+            button.classList.remove("btn-info")
+            button.classList.add("btn-danger")
+        }
+    }
+</script>

@@ -1,0 +1,209 @@
+[
+  {
+    "Id": "3b3ae6ce-b5ec-4582-846f-b1f0b78d3b06",
+    "Setor": "Têmpera",
+    "Nome": "TMP-1643IF",
+    "Ip": "192.168.0.131",
+    "Modelo": "Canon 1643IF",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "c6e248a0-1423-44a9-95e5-001c6b148f7e",
+    "Setor": "Gerência",
+    "Nome": "GER-1643IF",
+    "Ip": "192.168.0.125",
+    "Modelo": "Canon 1643IF",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "aec7c8e0-e14e-4fcb-8638-66db28d3f075",
+    "Setor": "Descoberta automática",
+    "Nome": "SWT02R01",
+    "Ip": "192.168.0.4",
+    "Modelo": "Modelo desconhecido",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "3c00793c-d47c-44a1-add7-e7a1f0e176fb",
+    "Setor": "Descoberta automática",
+    "Nome": "Impressora desconhecida",
+    "Ip": "192.168.0.54",
+    "Modelo": "Modelo desconhecido",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "d0d59890-3aa3-4801-9237-b4e59f819388",
+    "Setor": "Descoberta automática",
+    "Nome": "Impressora desconhecida",
+    "Ip": "192.168.0.55",
+    "Modelo": "TASKalfa 4002i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "6eea6ce2-c8b6-4a6a-b929-c02f8736a049",
+    "Setor": "Descoberta automática",
+    "Nome": "idrac-3D1MH04",
+    "Ip": "192.168.0.110",
+    "Modelo": "Modelo desconhecido",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "7ee14c11-c7b9-4643-a648-21fc27319bd8",
+    "Setor": "Descoberta automática",
+    "Nome": "Diretoria",
+    "Ip": "192.168.0.116",
+    "Modelo": "EPSON WF-C5890 Series",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "0a6c54e8-1a49-473c-991f-1d065702a754",
+    "Setor": "Descoberta automática",
+    "Nome": "EPSON71589C",
+    "Ip": "192.168.0.117",
+    "Modelo": "EPSON WF-C5890 Series",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "75fd0fea-83ec-4951-8228-9e0885d080bb",
+    "Setor": "Descoberta automática",
+    "Nome": "QLD - 1643IF",
+    "Ip": "192.168.0.120",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "475c1a01-fa72-44b0-816c-ef3e4d0e0553",
+    "Setor": "Descoberta automática",
+    "Nome": "DOB - 1643IF",
+    "Ip": "192.168.0.122",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "cb92700a-585b-447f-9150-4a434d0efd36",
+    "Setor": "Descoberta automática",
+    "Nome": "ALM - 1643IF",
+    "Ip": "192.168.0.123",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "d0ec41cc-9cad-49f8-849b-5abbd4c1934c",
+    "Setor": "Descoberta automática",
+    "Nome": "MON - 529IF",
+    "Ip": "192.168.0.121",
+    "Modelo": "Canon iR-ADV 529 04.12",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "6a4392ab-d2ba-4784-b471-e4611d81f022",
+    "Setor": "Descoberta automática",
+    "Nome": "iR1643i II",
+    "Ip": "192.168.0.128",
+    "Modelo": "Canon iR1643i II",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "887870ca-d858-43aa-9e64-3a03a67f0a61",
+    "Setor": "Descoberta automática",
+    "Nome": "COM - 1643IF",
+    "Ip": "192.168.0.129",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "82d4a35f-630d-4a71-8cca-5694d367fc86",
+    "Setor": "Descoberta automática",
+    "Nome": "FIS - 1643IF",
+    "Ip": "192.168.0.130",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "502d9e75-acc1-4393-a8cd-7a9eea9289b5",
+    "Setor": "Descoberta automática",
+    "Nome": "TMP - 1643IF",
+    "Ip": "192.168.0.131",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "f952b420-e1f0-4cdf-ae10-6e6be78d128d",
+    "Setor": "Descoberta automática",
+    "Nome": "LOG - 1643P",
+    "Ip": "192.168.0.119",
+    "Modelo": "Canon iR1643P R2.10/PH",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "7b750883-7703-45fd-8621-4605a4021d38",
+    "Setor": "Descoberta automática",
+    "Nome": "2D - 1643P",
+    "Ip": "192.168.0.127",
+    "Modelo": "Canon iR1643P R2.10/PH",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "413af420-e4d5-4062-b278-c66718c23af9",
+    "Setor": "Descoberta automática",
+    "Nome": "FIN - 1643IF",
+    "Ip": "192.168.0.132",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "70d9cb84-673b-4609-8143-d473c629b83a",
+    "Setor": "Descoberta automática",
+    "Nome": "RH - 1643IF",
+    "Ip": "192.168.0.133",
+    "Modelo": "Canon iR1643i",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "a2f51770-3c70-447b-848c-8975616f166e",
+    "Setor": "Descoberta automática",
+    "Nome": "PRG - 529IF",
+    "Ip": "192.168.0.126",
+    "Modelo": "Canon iR-ADV 529 05.18",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "821f7fa5-61cf-412c-9c0b-e54f255b27c8",
+    "Setor": "Descoberta automática",
+    "Nome": "GS2220",
+    "Ip": "192.168.0.227",
+    "Modelo": "Modelo desconhecido",
+    "Online": false,
+    "Toners": []
+  },
+  {
+    "Id": "3ad8ebba-92d9-4b9e-842f-27eedbe7744b",
+    "Setor": "Descoberta automática",
+    "Nome": "ZD230",
+    "Ip": "192.168.0.49",
+    "Modelo": "Zebra Technologies ZD230",
+    "Online": false,
+    "Toners": []
+  }
+]
