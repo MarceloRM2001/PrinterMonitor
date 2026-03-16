@@ -73,6 +73,29 @@ namespace PrinterMonitor.Services
             return printers;
         }
 
+        public string ObterSerial(string ip)
+        {
+            try
+            {
+                var result = Messenger.Get(
+                    VersionCode.V1,
+                    new IPEndPoint(IPAddress.Parse(ip), 161),
+                    new OctetString("public"),
+                    new List<Variable>
+                    {
+                        new Variable(new ObjectIdentifier("1.3.6.1.2.1.43.5.1.1.17.1"))
+                    },
+                    6000
+                );
+
+                return result.First().Data.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         public string ObterNomeImpressora(string ip)
         {
             try

@@ -19,6 +19,26 @@ public class PrintersController : Controller
     {
         var printers = _printerService.GetAll();
 
+        var status = new Dictionary<string, bool>();
+
+        foreach(var printer in printers)
+        {
+            if(string.IsNullOrEmpty(printer.Ip))
+                continue;
+
+            try
+            {
+                status[printer.Ip] = _printerService.IsOnline(printer.Ip);
+            }
+            catch
+            {
+                status[printer.Ip] = false;
+            }
+        }
+
+        ViewBag.Status = status;
+        ViewBag.TotalPrinters = printers.Count;
+
         return View(printers);
     }
 
@@ -30,8 +50,10 @@ public class PrintersController : Controller
     [HttpPost]
     public IActionResult Create(Printer printer)
     {
-        _printerService.Add(printer);
+        if(string.IsNullOrEmpty(printer.Ip))
+               printer.Ip = "0.0.0.0";
 
+         _printerService.Add(printer);   
         return RedirectToAction("Index");
     }
 
@@ -57,32 +79,33 @@ public class PrintersController : Controller
         return RedirectToAction("Index");
     }
 
-    public IActionResult TestSnmp(string ip)
+    public async Task<IActionResult> Discover(string network)
     {
-        try
-        {
-            var result = PrinterSnmpService.Test(ip);
-
-            return Json(new { online = result });
-        }
-        catch
-        {
-            return Json(new { online = false });
-        }
-    }
-
-    public async Task<IActionResult> Discover()
-    {
-        var ips = await PrinterSnmpService.Discover("192.168.0");
+        var ips = await PrinterSnmpService.Discover(network);
 
         var snmp = new PrinterSnmpService();
 
         var newPrinters = new List<Printer>(); 
+
+        var existentes = _printerService.GetAll();
         
         foreach(var ip in ips)
         {
             var nome = snmp.ObterNomeImpressora(ip);
             var modelo = snmp.ObterModeloImpressora(ip);
+            var serial = snmp.ObterSerial(ip);
+
+            if(string.IsNullOrEmpty(serial))
+                continue;
+
+            var printerExistente = existentes
+                .FirstOrDefault(p => p.SerialNumer == serial);
+
+            if(printerExistente != null)
+            {
+                printerExistente.Ip = ip;
+                continue;
+            }
 
             if(string.IsNullOrEmpty(nome))
                 nome = "Impressora desconhecida";
@@ -92,6 +115,7 @@ public class PrintersController : Controller
 
             newPrinters.Add(new Printer
             {
+                SerialNumer = serial,
                 Setor = "Descoberta automática",
                 Nome = nome,
                 Ip = ip,
@@ -101,6 +125,30 @@ public class PrintersController : Controller
         _printerService.AddRange(newPrinters);
 
         return RedirectToAction("Index");
+    }
+
+    public IActionResult UpdateAll()
+    {
+        
+        _printerService.UpdateInfoPrinters();
+
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Status()
+    {
+        var printers = _printerService.GetAll();
+
+        var status = new Dictionary<string, bool>();
+
+        foreach(var printer in printers)
+        {
+            if(!string.IsNullOrEmpty(printer.Ip))
+                status[printer.Ip] = _printerService.IsOnline(printer.Ip);
+        }
+
+        return Json(status);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

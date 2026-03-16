@@ -51,6 +51,7 @@ public class HomeController : Controller
                     printer.Nome = service.ObterNomeImpressora(printer.Ip);
                     printer.Modelo = service.ObterModeloImpressora(printer.Ip);
                     printer.Toners = service.WalkImpressora(printer.Ip);
+                    printer.SerialNumer = service.ObterSerial(printer.Ip);
                 });
 
                 var completed = await Task.WhenAny(snmpTask, timeoutTask);

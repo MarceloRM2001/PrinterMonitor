@@ -3,70 +3,247 @@
     ViewData["Title"] = "Printers";
 }
 
-<h1>Impressoras</h1>
+<div class="container-fluid">
+    <div class="d-flex align-items-center gap-3 mb-3">
+        <a asp-action="Create" class="btn btn-primary mb-3">
+            Nova Impressora
+        </a>
+        <span class="badge bg-dark fs-6">
+            <i class="bi bi-printer me-2"></i> Total: @ViewBag.TotalPrinters impressoras
+        </span>
+    </div>
 
-<a asp-action="Create" class="btn btn-primary mb-3">
-    Nova Impressora
-</a>
+    <form id="discoverForm" method="get" asp-action="Discover">
+        <div class="input-group mp-3">
+            <input 
+                type="text"
+                name="network"
+                class="form-control"
+                placeholder="Ex.: 192.168.0 ou 192.168.90"
+                required />
+            <button class="btn btn-primary">
+                Descobrir impressoras
+            </button>
+        </div>
+    </form>
 
-<a asp-action="Discover" class="btn btn-primary mb-3">
-    Descobrir Impressoras na Rede
-</a>
+    <div id="loadingBar" class="text-center mt-4" style="display: none;">
+        <div class="spinner-border text-primary" role="status"></div>
+        <div class="mt-2">
+            Descobrindo impressoras na rede...
+        </div>
+    </div>
 
-<table class="table table-dark table-striped">
-    <thead>
-        <tr>
-            <th>Setor</th>
-            <th>Nome</th>
-            <th>IP</th>
-            <th>Modelo</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var printer in Model)
-        {
+    <div class="mt-4">
+        <a asp-action="UpdateAll" class="btn btn-warning">
+            Atualizar dados SNMP
+        </a>
+    </div>
+
+    <div class="input-group mb-3 mt-3">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input
+            type="text"
+            id="searchPrinter"
+            class="form-control"
+            placeholder="Buscar por nome, IP, setor ou modelo..." />
+    </div>
+
+    <table id="printerTable" class="table table-dark table-striped">
+        <thead>
             <tr>
-                <td>@printer.Setor</td>
-                <td>@printer.Nome</td>
-                <td>@printer.Ip</td>
-                <td>@printer.Modelo</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@printer.Id" class="btn btn-sm btn-warning">
-                        Editar
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@printer.Id" class="btn btn-sm btn-danger">
-                        Excluir
-                    </a>
-                    <button class="btn btn-sm btn-info" onclick="TestSnmp('@printer.Ip', this)">
-                        Testar SNMP
-                    </button>
-                </td>
+                <th onclick="sortTable(0,this)">Setor <span class="sort-icon"></span></th>
+                <th onclick="sortTable(1,this)">Nome <span class="sort-icon"></span></th>
+                <th onclick="sortTable(2,this)">IP <span class="sort-icon"></span></th>
+                <th onclick="sortTable(3,this)">Modelo <span class="sort-icon"></span></th>
+                <th onclick="sortTable(4,this)">Serial Number <span class="sort-icon"></span></th>
+                <th>Status</th>
+                <th>Ações</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var printer in Model)
+            {
+                <tr data-ip="@printer.Ip" >
+                    <td>@printer.Setor</td>
+                    <td>@printer.Nome</td>
+                    <td>
+                        <a href="http://@printer.Ip" target="_blank" rel="noopener" class="printer-ip">
+                            <i class="bi bi-globe2 me-2"></i>
+                            @printer.Ip
+                        </a>
+                    </td>
+                    <td>@printer.Modelo</td>
+                    <td>@printer.SerialNumer</td>
+                    <td class="status-cell"></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@printer.Id" class="btn btn-sm btn-warning">
+                            Editar
+                        </a>
+                        <button class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal"
+                            data-nome="@printer.Nome"
+                            data-ip="@printer.Ip"
+                            data-id="@printer.Id" >
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="bi bi-trash"></i>
+                    Confirmar exclusão
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir a impressora?</p>
+                <strong id="printerNome"></strong><br />
+                <span id="printerIp" ></span>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" >
+                    Cancelar
+                </button>
+                <a id="confirmDeleteBtn" class="btn btn-danger" >
+                    <i class="bi bi-trash"></i>
+                    Excluir
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    async function TestSnmp(ip, button)
+    var deleteModal = document.getElementById('confirmDeleteModal')
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+
+        var id = button.getAttribute('data-id')
+        var nome = button.getAttribute('data-nome')
+        var ip = button.getAttribute('data-ip')
+
+        document.getElementById('printerNome').innerText = nome
+        document.getElementById('printerIp').innerText = "IP: " + ip
+
+        var deleteUrl = "/Printers/Delete?id=" + id
+
+        document.getElementById('confirmDeleteBtn').href = deleteUrl
+    })
+</script>
+
+<script>
+    document.getElementById("discoverForm").addEventListener("submit", function(){
+        document.getElementById("loadingBar").style.display = "block";
+    });
+</script>
+
+<script>
+    document.getElementById("searchPrinter").addEventListener("keyup", function(){
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#printerTable tbody tr");
+
+        rows.forEach(function(row){
+            let cells = row.querySelectorAll("td");
+            let text = "";
+
+            cells.forEach(cell => {
+                text += cell.textContent.toLowerCase() + " ";
+            });
+
+            if(text.includes(filter))
+                row.style.display = "";
+            else
+                row.style.display = "none";
+        });
+    });
+</script>
+
+<script>
+    function sortTable(n, element)
     {
-        button.innerText = "Testando..."
+        let table = document.getElementById("printerTable");
+        let tbody = table.tBodies[0];
+        let rows = Array.from(tbody.rows);
+        let asc = !element.classList.contains("asc");
 
-        const response = await fetch(`/Printers/TestSnmp?ip=${ip}`)
+        rows.sort(function(a,b){
+            let A = a.cells[n].textContent.trim().toLowerCase();
+            let B = b.cells[n].textContent.trim().toLowerCase();
 
-        const data = await response.json()
+            if(A < B) return asc ? -1 : 1;
+            if(A > B) return asc ? 1 : -1;
+            return 0;
+        });
 
-        if(data.online)
+        rows.forEach(row => tbody.appendChild(row));
+
+        document.querySelectorAll("#printerTable th").forEach(th=>{
+            th.classList.remove("asc","desc");
+            let icon = th.querySelector(".sort-icon");
+            if(icon) icon.innerHTML="";
+        });
+
+        element.classList.add(asc ? "asc" : "desc");
+
+        let icon = element.querySelector(".sort-icon");
+        if(icon)
+            icon.innerHTML = asc 
+                ? '<i class="bi bi-arrow-up"></i>' 
+                : '<i class="bi bi-arrow-down"></i>';
+    }
+</script>
+
+<script>
+    async function updateStatus(){
+        try
         {
-            button.innerText = "Online"
-            button.classList.remove("btn-info")
-            button.classList.add("btn-success")
+            const response = await fetch("/Printers/Status");
+            const data = await response.json();
+
+            document.querySelectorAll("#printerTable tbody tr").forEach(row => {
+                const ip = row.getAttribute("data-ip");
+
+                if(!ip || !(ip in data))
+                    return;
+                
+                const statusCell = row.cells[5];
+
+                if(data[ip])
+                {
+                    statusCell.innerHTML = 
+                        '<i class="bi bi-circle-fill text-success me-2"></i>';
+                }
+                else
+                {
+                    statusCell.innerHTML = 
+                        '<i class="bi bi-circle-fill text-danger me-2"></i>';
+                }
+                
+                statusCell.classList.add("status-change");
+
+                setTimeout(()=>{
+                    statusCell.classList.remove("status-change");
+                },800);
+            });
         }
-        else
+        catch(error)
         {
-            button.innerText = "Offline"
-            button.classList.remove("btn-info")
-            button.classList.add("btn-danger")
+            console.log("Erro ao atualizar status: ", error);
         }
     }
+    updateStatus();
+    setInterval(updateStatus, 10000);
 </script>

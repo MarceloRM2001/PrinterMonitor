@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Xml.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PrinterMonitor.Services
 {
@@ -82,6 +83,39 @@ namespace PrinterMonitor.Services
             }
 
             Save(printers);
+        }
+
+        public void UpdateInfoPrinters()
+        {
+            var printers = GetAll();
+
+            var snmp = new PrinterSnmpService();
+
+            foreach(var printer in printers)
+            {
+                var nome = snmp.ObterNomeImpressora(printer.Ip);
+                var modelo = snmp.ObterModeloImpressora(printer.Ip);
+
+                if(!string.IsNullOrEmpty(nome))
+                    printer.Nome = nome;
+
+                if(!string.IsNullOrEmpty(modelo))
+                    printer.Modelo = modelo;
+            }
+
+            Save(printers);
+        }
+
+        public bool IsOnline(string ip)
+        {
+            try
+            {
+                return PrinterSnmpService.Test(ip);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

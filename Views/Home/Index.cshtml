@@ -4,10 +4,7 @@
     ViewData["Title"] = "Dashboard";
 }
 <style>
-    .container-fluid{
-        padding: 20px;
-        background-color: #0f172a;
-    }
+    
 </style>
 <div class="container-fluid">
     <div class="grid-printers">
@@ -26,6 +23,7 @@
                     {
                         <strong>Nome: @printer.Nome</strong><br />
                         <small class="small">Modelo: @printer.Modelo</small><br />
+                        <small class="small">Serial: @printer.SerialNumer</small><br />
                         <small class="small">IP: @printer.Ip</small>
 
                         <hr style="border: 0; border-top: 1px solid #666; margin: 15px 0;" />
